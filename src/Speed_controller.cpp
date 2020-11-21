@@ -38,7 +38,7 @@ boolean SpeedController::Turn(int degree, int direction)
     int trackCircumference = (0.142875 * 1000) * PI;
     int wheelCircumference = 2 * PI * 35.0;
 
-    int turns = trackCircumference * (degree/ 360.0) * 1140 / wheelCircumference;
+    int turns = trackCircumference * (degree/ 360.0) * 1440 / wheelCircumference;
     // int turns = counts*(degree/180.0); //assignment 1: convert degree into counts
     int count_turn = MagneticEncoder.ReadEncoderCountLeft();
 
