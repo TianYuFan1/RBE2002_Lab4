@@ -36,13 +36,13 @@ int Encoder::ReadEncoderCountRight(void)
 
 float Encoder::ReadVelocityLeft(void)
 {
-    float measurement = (C_wheel/N_wheel)*(count_left-prev_count_left)/((float)interval/1000);
+    float measurement = (C_wheel/N_wheel)*(count_left-prev_count_left)/((float)interval/1000); // mm/s
     return measurement;
 }
 
 float Encoder::ReadVelocityRight(void)
 {
-    float measurement = (C_wheel/N_wheel)*(count_right-prev_count_right)/((float)interval/1000);
+    float measurement = (C_wheel/N_wheel)*(count_right-prev_count_right)/((float)interval/1000); // mm/s
     return measurement;
 }
 

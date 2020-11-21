@@ -7,7 +7,7 @@ class Position{
     private:
         float x, y, theta;
         unsigned long time_prev, time_now;
-        const float l = 0.142875 * 1000; //assignment
+        const float l = 0.142875 * 1000; //mm //assignment
         
     public:
         struct pose_data {

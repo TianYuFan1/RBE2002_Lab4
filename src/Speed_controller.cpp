@@ -31,20 +31,11 @@ void SpeedController::Run(float target_velocity_left, float target_velocity_righ
     }
 }
 
-
-
-
 boolean SpeedController::Turn(int degree, int direction)
 {
     motors.setEfforts(0, 0);
 
-
-        // const float N_wheel = 1440.0; //counts per wheel revolution
-        // const float R_wheel = 35.0; //radius of wheel in [mm]
-        // const float C_wheel = 2*PI*R_wheel; //circumference of wheel
-        // const int interval = 50; // time in [ms], how often encoders are being updated
-
-    int trackCircumference = 0.142875 * 1000;;
+    int trackCircumference = (0.142875 * 1000) * PI;
     int wheelCircumference = 2 * PI * 35.0;
 
     int turns = trackCircumference * (degree/ 360.0) * 1140 / wheelCircumference;
