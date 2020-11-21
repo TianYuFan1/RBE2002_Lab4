@@ -5,6 +5,7 @@ Encoder RomiEncoders;
 float x = 0;
 float y = 0;
 float theta = 0;
+float time_interval = 50.0 / 1000.0; // s
 unsigned long time_prev = millis();
 unsigned long time_now = 0;
 
@@ -43,7 +44,33 @@ void Position::UpdatePose(float target_speed_left, float target_speed_right)
     time_now = millis();
     if(time_now - time_prev >= 50) //update every 50ms for practical reasons
     {
-        //assignment
+        time_prev = time_now;
+        float speed_left = RomiEncoders.ReadVelocityLeft(); // mm/s
+        float speed_right = RomiEncoders.ReadVelocityRight(); // mm/s
+
+        if (target_speed_left == target_speed_right || speed_left == speed_right) {
+            handleStraight(speed_left, speed_right);
+        } else {
+            handleCurved(target_speed_left, target_speed_right);
+        }
     }
+}
+
+void Position::handleStraight(float speed_left, float speed_right) {
+    float V = (speed_left + speed_right) / 2.0;
+
+    x = x + V * cos(theta) * time_interval; // mm
+    y = y + V * sin(theta) * time_interval; // mm
+    theta = theta;
+}
+
+void Position::handleCurved(float speed_left, float speed_right) {
+
+    float R = (l/2.0) * (speed_right + speed_left) / (speed_right - speed_left);
+    float w = (speed_right - speed_left) / l;
+
+    x = x - R * sin(theta) + R * sin(theta + w * time_interval); // mm
+    y = y + R * cos(theta) - R * cos(theta + w * time_interval); // mm
+    theta = theta + w * time_interval; // rad/s
 }
 

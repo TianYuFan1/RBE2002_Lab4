@@ -7,7 +7,7 @@ class Position{
     private:
         float x, y, theta;
         unsigned long time_prev, time_now;
-        const float l = 0.142875; //assignment
+        const float l = 0.142875 * 1000; //assignment
         
     public:
         struct pose_data {
@@ -20,6 +20,8 @@ class Position{
         pose_data ReadPose(void);
         void PrintPose(void);
         void Stop(void);
+        void handleStraight (float,float);
+        void handleCurved(float,float);
 };
 
 #endif
