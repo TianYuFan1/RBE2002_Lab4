@@ -36,11 +36,14 @@ void Behaviors::Run(void)
     
     case DRIVE:
         robot_state = DRIVE;
+        robot.Straight(50, 10);
+        robot.Turn(180, 0);
+        robot.Straight(-50, 10);
         //assignment
-        robot.Straight(25,10); //velocity, duration
-        robot.Turn(180,0); //degrees, direction
-        robot.Curved(25,75,10); //velocity left, velocity right, duration
-        robot.Stop(); 
+        // robot.Straight(25,10); //velocity, duration
+        // robot.Turn(180,0); //degrees, direction
+        // robot.Curved(25,75,10); //velocity left, velocity right, duration
+        // robot.Stop(); 
         robot_state = IDLE;
         break;
     }

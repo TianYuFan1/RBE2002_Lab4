@@ -51,23 +51,24 @@ void Position::UpdatePose(float target_speed_left, float target_speed_right)
         if (target_speed_left == target_speed_right || speed_left == speed_right) {
             handleStraight(speed_left, speed_right);
         } else {
-            handleCurved(target_speed_left, target_speed_right);
+            handleCurved(speed_left, speed_right);
         }
+        PrintPose();
     }
 }
 
 void Position::handleStraight(float speed_left, float speed_right) {
-    float V = (speed_left + speed_right) / 2.0;
+    float V = (speed_left + speed_right) / 2.0; // mm/s
 
     x = x + V * cos(theta) * time_interval; // mm
     y = y + V * sin(theta) * time_interval; // mm
-    theta = theta;
+    theta = theta; // rad
 }
 
 void Position::handleCurved(float speed_left, float speed_right) {
 
-    float R = (l/2.0) * (speed_right + speed_left) / (speed_right - speed_left);
-    float w = (speed_right - speed_left) / l;
+    float R = (l/2.0) * (speed_right + speed_left) / (speed_right - speed_left); // mm
+    float w = (speed_right - speed_left) / l; //  rad/s
 
     x = x - R * sin(theta) + R * sin(theta + w * time_interval); // mm
     y = y + R * cos(theta) - R * cos(theta + w * time_interval); // mm
