@@ -33,13 +33,15 @@ void SpeedController::Run(float target_velocity_left, float target_velocity_righ
 
 boolean SpeedController::Turn(int degree, int direction)
 {
-    motors.setEfforts(0, 0);
+    // motors.setEfforts(0, 0);
 
     int trackCircumference = (0.142875 * 1000) * PI;
     int wheelCircumference = 2 * PI * 35.0;
 
     int turns = trackCircumference * (degree/ 360.0) * 1440 / wheelCircumference;
     // int turns = counts*(degree/180.0); //assignment 1: convert degree into counts
+    // int turns = (degree/360.0) * 4.0 * 180.0 * (0.142875 * 1000.0 / 35.0);
+
     int count_turn = MagneticEncoder.ReadEncoderCountLeft();
 
     while(abs(abs(count_turn) - abs(MagneticEncoder.ReadEncoderCountLeft())) <= turns)
@@ -47,19 +49,19 @@ boolean SpeedController::Turn(int degree, int direction)
         if(!direction) Run(50,-50);
         else Run(-50,50);
     }
-    motors.setEfforts(0, 0);
+    // motors.setEfforts(0, 0);
     return 1;
 }
 
 boolean SpeedController::Straight(int target_velocity, int time) //in mm/s and s
 {
-    motors.setEfforts(0, 0);
+    // motors.setEfforts(0, 0);
     unsigned long now = millis();
 
     while ((unsigned long)(millis() - now) <= time*1000){
         Run(target_velocity,target_velocity);
     }
-    motors.setEfforts(0, 0);
+    // motors.setEfforts(0, 0);
     return 1;
 }
 
