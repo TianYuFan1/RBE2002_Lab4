@@ -27,13 +27,28 @@ void SpeedController::Run(float target_velocity_left, float target_velocity_righ
 
         motors.setEfforts(u_left,u_right);
         odometry.UpdatePose(target_velocity_left,target_velocity_right); //this is where your newly programmed function is/will be called
+
     }
 }
+
+
+
 
 boolean SpeedController::Turn(int degree, int direction)
 {
     motors.setEfforts(0, 0);
-    int turns = counts*(degree/180.0); //assignment 1: convert degree into counts
+
+
+        // const float N_wheel = 1440.0; //counts per wheel revolution
+        // const float R_wheel = 35.0; //radius of wheel in [mm]
+        // const float C_wheel = 2*PI*R_wheel; //circumference of wheel
+        // const int interval = 50; // time in [ms], how often encoders are being updated
+
+    int trackCircumference = 0.142875 * 1000;;
+    int wheelCircumference = 2 * PI * 35.0;
+
+    int turns = trackCircumference * (degree/ 360.0) * 1140 / wheelCircumference;
+    // int turns = counts*(degree/180.0); //assignment 1: convert degree into counts
     int count_turn = MagneticEncoder.ReadEncoderCountLeft();
 
     while(abs(abs(count_turn) - abs(MagneticEncoder.ReadEncoderCountLeft())) <= turns)
